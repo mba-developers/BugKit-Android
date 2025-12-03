@@ -7,7 +7,7 @@ version = '0.0.1'
 
 task assemble {
     doLast {
-        println "Dummy assemble task completed. Using existing AAR."
+        println "assemble task completed."
     }
 }
 
@@ -17,8 +17,41 @@ publishing {
             groupId = 'com.github.mba-developers'
             artifactId = 'BugKit-Android' 
             version = '0.0.1'
-
             artifact("bugkit-0.0.1.aar")
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                def addDependency = { group, name, version ->
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', group)
+                    dependencyNode.appendNode('artifactId', name)
+                    dependencyNode.appendNode('version', version)
+                    dependencyNode.appendNode('scope', 'implementation')
+                }
+
+                // --- LIST YOUR DEPENDENCIES HERE ---
+                
+                // Android Core
+                addDependency('androidx.core', 'core-ktx', '1.12.0')
+                addDependency('androidx.appcompat', 'appcompat', '1.6.1')
+                addDependency('com.google.android.material', 'material', '1.11.0')
+                
+                // Dimensions
+                addDependency('com.intuit.sdp', 'sdp-android', '1.1.1')
+                addDependency('com.intuit.ssp', 'ssp-android', '1.1.1')
+
+                // Video Player (Media3)
+                addDependency('androidx.media3', 'media3-exoplayer', '1.2.1')
+                addDependency('androidx.media3', 'media3-ui', '1.2.1')
+                addDependency('androidx.media3', 'media3-common', '1.2.1')
+
+                // Networking (Ktor)
+                addDependency('io.ktor', 'ktor-client-core', '3.0.1')
+                addDependency('io.ktor', 'ktor-client-android', '3.0.1')
+                addDependency('io.ktor', 'ktor-client-content-negotiation', '3.0.1')
+                addDependency('io.ktor', 'ktor-serialization-kotlinx-json', '3.0.1')
+            }
         }
     }
 }
