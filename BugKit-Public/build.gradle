@@ -2,11 +2,22 @@ plugins {
     id 'maven-publish'
 }
 
+group = 'com.github.mba-developers'
+version = '0.0.1'
+
+task assemble {
+    doLast {
+        println "Dummy assemble task completed. Using existing AAR."
+    }
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId = 'bugkit'
+            groupId = 'com.github.mba-developers'
+            artifactId = 'BugKit-Android' 
             version = '0.0.1'
+
             artifact("bugkit-0.0.1.aar")
         }
     }
