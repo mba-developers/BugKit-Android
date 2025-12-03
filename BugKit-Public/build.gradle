@@ -1,0 +1,13 @@
+plugins {
+    id 'maven-publish'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId = 'bugkit'
+            version = '0.0.1'
+            artifact("bugkit-0.0.1.aar")
+        }
+    }
+}
